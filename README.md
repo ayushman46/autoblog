@@ -1,6 +1,3 @@
-# AutoBlog AI
-
-![Demo](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDk5d2V4dWZ6Y3V1dG5tZ3RjYzV4Z2h6dGJ6eHp1a2J6bmV4YiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7qE1YN7aBOFPRw8E/giphy.gif)
 
 Convert YouTube videos or local MP4 files into professional blog posts with AI.
 
