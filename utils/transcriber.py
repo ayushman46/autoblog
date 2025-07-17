@@ -1,40 +1,27 @@
-import os
 import whisper
-from typing import Optional
+from typing import Tuple, Optional
 
-def transcribe_audio(
-    audio_path: str,
-    model_size: str = "base",
-    language: Optional[str] = None
-) -> str:
+def transcribe_audio(audio_path: str) -> Tuple[str, dict]:
     """
-    Transcribe audio using Whisper.
+    Transcribe audio file and return both text and metadata
     
     Args:
         audio_path: Path to audio file (WAV/MP3)
-        model_size: Whisper model size (tiny, base, small, medium, large)
-        language: Optional language code (e.g., 'en')
-    
+        
     Returns:
-        Transcribed text
+        Tuple of (transcribed_text, metadata_dict)
     """
     try:
-        # Load model (will auto-download on first run)
-        model = whisper.load_model(model_size)
+        model = whisper.load_model("base")
+        result = model.transcribe(audio_path)
         
-        # Run transcription
-        result = model.transcribe(
-            audio_path,
-            language=language,
-            fp16=False  # Disable GPU for better compatibility
-        )
+        metadata = {
+            "duration": result.get('segments', [{}])[-1].get('end', 0),
+            "language": result.get('language', 'en'),
+            "model": "base"
+        }
         
-        return result["text"]
-    
+        return result.get('text', ''), metadata
+        
     except Exception as e:
         raise RuntimeError(f"Transcription failed: {str(e)}")
-
-# Test the function directly if needed
-if __name__ == "__main__":
-    test_file = input("Enter audio file path: ")
-    print("Transcription:", transcribe_audio(test_file))
